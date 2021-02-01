@@ -1,23 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from 'react';
 
 function App() {
+  const [create, setCreate] = useState(false);
+  const [take, setTake] = useState(false);
+  const [currentOption, setCurrentOption] = useState('single');
+  
+  const changeOption = (option) => {
+    setCurrentOption(option)
+  }
+
+  const createSurveyButton = () => {
+    setTake(false);
+    setCreate(true);
+  }
+  const takeSurveyButton = () => {
+    setCreate(false);
+    setTake(true);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {(create===false && take===false) ? 
+        (
+        <>
+          <button className="survey" onClick={createSurveyButton}>Create Survey</button>
+          <br/><br/><br/>
+          <button className="survey" onClick={takeSurveyButton}>Take Survey</button>
+        </>)
+        :
+        null
+      }
+      {(create === true)? 
+        <>
+          <select onChange={(event) => changeOption(event.target.value)} value={currentOption}>
+            <option value="single">Single-select</option>
+            <option value="multi">Multi-select</option>
+          </select>
+        </> 
+      : null}
     </div>
   );
 }
